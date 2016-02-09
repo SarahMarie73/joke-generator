@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chuck Norris API Demo</title>
+  <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+</head>
+<body>
+    <div class="joke"></div>
+    <button class="button" id="new-quote">New quote</button>
+   
+    <script>
+        function getQuote() {
+            var chuckJoke = "http:api.icndb.com/jokes/random";
+            $.getJSON( chuckJoke )
+            .done(function( data ) {
+                console.log(data.value.joke);
+                $("div.joke").html("<p>" + data.value.joke + "</p>");
+            })
+            .fail(function( jqxhr, textStatus, error ) {
+                var err = textStatus + ", " + error;
+                console.log( "Request Failed: " + err );
+                $("div.joke").html("<p>Request failed: " + err);
+            });
+        };
+
+        //call the initial quote when the page loads, and set a trigger on the button
+        $(document).ready(function() {
+            getQuote();
+            $('#new-quote').on('click', getQuote);
+        });
+</script>
+
+</body>
+</html>
